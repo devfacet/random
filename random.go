@@ -24,6 +24,8 @@ func init() {
 // MustULID returns a ULID or panics on error.
 func MustULID(secure bool) string {
 	// Ref: ulid.Monotonic: The returned type isn't safe for concurrent use.
+	//			As of ulid v2.1.0 there is new thread safe function called DefaultEntropy()
+	//			See https://github.com/oklog/ulid/pull/81
 	var u ulid.ULID
 	if secure {
 		entropy := ulid.Monotonic(rand.Reader, 0) // incremental entropy for same ms (cryptographic)
