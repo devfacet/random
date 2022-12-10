@@ -7,7 +7,6 @@ package random
 import (
 	"crypto/rand"
 	mrand "math/rand"
-	"strings"
 	"time"
 
 	"github.com/oklog/ulid/v2"
@@ -18,6 +17,7 @@ var (
 )
 
 func init() {
+	// TODO: math.Seed function is deprecated (see https://pkg.go.dev/math/rand@master#Seed and https://pkg.go.dev/math/rand@master#Seed).
 	mrand.Seed(time.Now().UnixNano())
 }
 
@@ -36,7 +36,7 @@ func MustULID(secure bool) string {
 		entropy := ulid.Monotonic(mr, 0) // incremental entropy for same ms (random)
 		u = ulid.MustNew(ulid.Now(), entropy)
 	}
-	return strings.ToLower(u.String())
+	return u.String()
 }
 
 // MustBytes generates random bytes or panics on error.
